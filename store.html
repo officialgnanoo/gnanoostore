@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر Gnanoo Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0f13; --bg-soft:#171a20; --accent:#C98A3E; --gold:#F6D98A; --line:#2A2E36;
+    --text:#F2EEE3; --muted:#9a9587;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; color:var(--text); font-family:'Cairo', sans-serif; padding-bottom:70px; min-height:100vh;
+    background:radial-gradient(ellipse 80% 40% at 50% 0%, rgba(201,138,62,.12), transparent 70%), var(--bg);
+    animation:fadeIn .9s ease both;
+  }
+  @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+  @keyframes rise{ from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none} }
+  @keyframes drop{ from{opacity:0; transform:translateY(-12px)} to{opacity:1; transform:none} }
+
+  /* ---------- نفس بنية وتنسيق هيدر index.html ---------- */
+  .site-header{
+    margin:0 calc(50% - 50vw) 22px;
+    background:linear-gradient(180deg,#1B1F26 0%,#171A20 100%);
+    border-bottom:1px solid #2A2E36;
+    box-shadow:0 8px 22px rgba(0,0,0,.35);
+    padding:14px clamp(12px,4vw,20px) 16px;
+    position:relative;
+  }
+  .site-header::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:linear-gradient(90deg,transparent,var(--accent) 50%,transparent);
+    opacity:.35;
+  }
+  .header-top{
+    position:relative; display:flex; align-items:center; justify-content:space-between;
+    gap:8px; width:100%; min-height:38px;
+  }
+  .header-left{
+    display:flex; align-items:center; gap:8px; flex-shrink:0;
+    direction:ltr; min-width:0;
+    position:absolute; left:0; top:50%; transform:translateY(-50%);
+  }
+  .header-top .brand-row{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  }
+  .brand-row{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:4px; direction:ltr; text-decoration:none; flex-shrink:0; min-width:0;
+  }
+  .brand-main{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    direction:ltr;
+  }
+  .brand-row img{
+    width:clamp(28px,7vw,34px); height:clamp(28px,7vw,34px);
+    border-radius:9px; flex-shrink:0; object-fit:cover;
+    box-shadow:0 3px 10px rgba(0,0,0,.4);
+  }
+  .brand-row .brand-en{
+    font-weight:900; font-size:clamp(1rem,4.2vw,1.3rem); letter-spacing:.4px;
+    white-space:nowrap; line-height:1;
+    background:linear-gradient(90deg,var(--accent) 0%,#F6D98A 25%,var(--accent) 50%,#F6D98A 75%,var(--accent) 100%);
+    background-size:300% auto; -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+    animation:headerShimmer 6s linear infinite, headerGlowSoft 3.6s ease-in-out infinite;
+    display:inline-block;
+  }
+  .brand-row .brand-tag{
+    color:#9A9587; font-weight:600; font-size:clamp(.66rem,2.5vw,.86rem);
+    line-height:1.2; white-space:nowrap; direction:rtl;
+  }
+  @keyframes headerShimmer{ 0%{background-position:0% 50%} 100%{background-position:300% 50%} }
+  @keyframes headerGlowSoft{
+    0%,100%{text-shadow:0 0 2px rgba(246,217,138,.15)}
+    50%{text-shadow:0 0 8px rgba(246,217,138,.45)}
+  }
+  .contact-group{
+    display:flex; align-items:center; gap:6px; min-width:0; direction:ltr;
+  }
+  .contact-group .num{
+    color:#F2EEE3; font-weight:800; font-size:clamp(.68rem,3vw,.95rem);
+    text-decoration:none; white-space:nowrap;
+  }
+  .mini-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:36px; height:36px; border-radius:50%; text-decoration:none;
+    border:1.5px solid; transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+    flex-shrink:0;
+  }
+  .mini-btn svg{width:17px; height:17px; display:block;}
+  .mini-btn:hover{transform:translateY(-1px) scale(1.06);}
+  .mini-btn.call-btn{background:rgba(62,110,100,.18); border-color:rgba(127,196,180,.55); color:#7FC4B4;}
+  .mini-btn.wa-btn{background:rgba(37,211,102,.14); border-color:rgba(37,211,102,.6); color:#25D366;}
+  .header-icon-btn{
+    width:36px; height:36px; border-radius:10px; background:#171A20;
+    border:1px solid #2A2E36; display:flex; align-items:center; justify-content:center;
+    color:#B7B2A4; cursor:pointer; flex-shrink:0; transition:.15s;
+  }
+  .header-icon-btn:hover,.header-icon-btn.active{
+    color:var(--accent); border-color:var(--accent); background:rgba(201,138,62,.12);
+  }
+  .header-icon-btn svg{width:17px; height:17px;}
+  .header-searchwrap{
+    max-height:0; overflow:hidden;
+    transition:max-height .28s ease,margin .28s ease;
+  }
+  .header-searchwrap.open{max-height:90px; margin-top:12px;}
+  .header-search{
+    display:flex; align-items:center; gap:8px; background:#171A20;
+    border:2px solid var(--accent); border-radius:11px; padding:7px 11px;
+    box-shadow:0 2px 10px rgba(0,0,0,.25);
+  }
+  .header-search svg{width:14px; height:14px; color:var(--accent); flex-shrink:0;}
+  .header-search input{
+    flex:1; min-width:0; background:none; border:none; outline:none; box-shadow:none;
+    -webkit-appearance:none; appearance:none; border-radius:0; color:#F2EEE3;
+    font-family:'Cairo',sans-serif; font-size:.86rem; text-align:right;
+  }
+  .header-search input:focus{outline:none; box-shadow:none; border:none;}
+  .header-search input::placeholder{color:#6b6255;}
+  @media (max-width:640px){
+    .site-header{padding-inline:10px;}
+    .header-top{gap:6px;}
+    .contact-group{gap:4px;}
+    .contact-group .num{font-size:clamp(.64rem,3.2vw,.86rem);}
+    .mini-btn,.header-icon-btn{width:32px; height:32px;}
+    .mini-btn svg,.header-icon-btn svg{width:15px; height:15px;}
+  }
+  @media (max-width:430px){
+    .header-top{flex-wrap:wrap; justify-content:center; padding-top:2px;}
+    .header-top .brand-row{position:static; transform:none; order:1; flex:1 0 100%; justify-content:center;}
+    .header-left{position:static; transform:none; order:2; justify-content:center; width:100%;}
+  }
+
+  .grid{ max-width:1100px; margin:30px auto; padding:0 16px; display:flex; flex-wrap:wrap; justify-content:center; gap:24px; }
+  .card{
+    flex:0 1 340px; width:min(340px,100%); display:flex; flex-direction:column; overflow:hidden;
+    background:linear-gradient(180deg,#1a1d24,#14171c); border:1px solid var(--line); border-radius:20px;
+    box-shadow:0 10px 28px rgba(0,0,0,.35); animation:rise .7s ease backwards;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .card:hover{ transform:translateY(-5px); border-color:rgba(201,138,62,.65); box-shadow:0 16px 36px rgba(0,0,0,.5), 0 0 18px rgba(201,138,62,.15); }
+  .card .main-img, .card .no-img{ width:100%; aspect-ratio:4/3; object-fit:cover; background:#0d0f13; display:block; cursor:zoom-in; transition:transform .5s ease; }
+  .card:hover .main-img{ transform:scale(1.05); }
+  .card .no-img{ display:flex; align-items:center; justify-content:center; color:var(--muted); cursor:default; }
+  .card-body{ padding:18px 16px 16px; flex:1; display:flex; flex-direction:column; }
+  .card-title{ font-weight:900; font-size:1.25rem; text-align:center; line-height:1.4; color:var(--text); }
+  .card-title::after{ content:""; display:block; width:44px; height:3px; margin:10px auto 16px; border-radius:3px; background:var(--accent); }
+  .details{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s ease, opacity .4s ease; opacity:0; }
+  .card.open .details{ grid-template-rows:1fr; opacity:1; }
+  .dinner{ overflow:hidden; min-height:0; }
+  .specs{ display:flex; flex-direction:column; gap:7px; margin-bottom:10px; }
+  .spec-row{
+    display:flex; justify-content:space-between; gap:8px; font-size:.95rem; font-weight:700;
+    border:1px solid var(--line); border-radius:11px; padding:9px 13px; background:#0d0f13;
+  }
+  .spec-row .k{ color:var(--accent); flex-shrink:0; }
+  .spec-row .v{ color:var(--text); text-align:left; }
+  .notes{ font-size:.9rem; color:var(--muted); line-height:1.7; border:1px dashed var(--line); border-radius:11px; padding:10px 13px; margin-bottom:10px; }
+  .sub-imgs{ display:flex; gap:7px; overflow-x:auto; padding-bottom:12px; }
+  .sub-imgs img{ width:58px; height:58px; border-radius:10px; object-fit:cover; flex-shrink:0; border:1px solid var(--line); cursor:pointer; transition:border-color .2s, transform .2s; }
+  .sub-imgs img:hover{ border-color:var(--accent); transform:scale(1.06); }
+  .btns{ display:flex; gap:10px; margin-top:auto; }
+  .btn-d, .contact-btn{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding:12px 8px; border-radius:13px;
+    font-family:'Cairo',sans-serif; font-weight:800; font-size:.98rem; text-decoration:none; cursor:pointer;
+    transition:transform .2s, box-shadow .2s, background .2s, color .2s, border-color .2s;
+  }
+  .btn-d{ background:transparent; color:var(--gold); border:1.5px solid var(--accent); }
+  .btn-d:hover{ background:rgba(201,138,62,.15); transform:translateY(-2px); }
+  .contact-btn{ background:linear-gradient(135deg,#2BE174,#1FB85C); color:#fff; border:1.5px solid transparent; }
+  .contact-btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(37,211,102,.35); }
+  .contact-btn svg{ width:19px; height:19px; fill:#fff; }
+
+  .empty-state{ width:100%; text-align:center; color:var(--muted); padding:60px 20px; font-size:1rem; animation:fadeIn .6s ease both; }
+
+  .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.92); display:none; align-items:center; justify-content:center; z-index:999; padding:20px; }
+  .lightbox.open{ display:flex; animation:fadeIn .25s ease both; }
+  .lightbox img{ max-width:100%; max-height:100%; border-radius:12px; }
+
+  .music{
+    position:fixed; left:16px; bottom:16px; width:46px; height:46px; border-radius:50%; z-index:60; padding:0;
+    background:var(--bg-soft); border:1.5px solid var(--accent); color:var(--accent); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:box-shadow .2s;
+  }
+  .music svg{ width:20px; height:20px; }
+  .music .on{ display:none; }
+  .music.playing .on{ display:block; }
+  .music.playing .off{ display:none; }
+  .music.playing{ animation:pulse 2s ease-out infinite; }
+  @keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(201,138,62,.5)} 100%{box-shadow:0 0 0 14px rgba(201,138,62,0)} }
+
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-top">
+      <div class="header-left">
+        <div class="contact-group">
+        <a class="mini-btn wa-btn" href="https://wa.me/201026034728" target="_blank" rel="noopener" title="واتساب"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.1.8.8-3-.2-.3C4.1 14.9 3.7 13.5 3.7 12c0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.2-8.3 8.2Zm4.5-6.2c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.1 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5-.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.5-.3Z" fill="currentColor"/></svg></a>
+        <a class="mini-btn call-btn" href="tel:+201026034728" title="اتصال"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="currentColor"/></svg></a>
+        </div>
+        <button class="header-icon-btn" id="lensBtn" type="button" aria-label="بحث" title="بحث"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+      </div>
+      <div class="brand-row" aria-label="GNANOO TECH">
+        <div class="brand-main">
+        <img src="data:image/jpeg;base64,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" alt="Gnanoo Tech logo" width="34" height="34">
+        <span class="brand-en">GNANOO TECH</span>
+        </div>
+        <span class="brand-tag">لخدمات الكمبيوتر واللاب توب</span>
+      </div>
+    </div>
+    <div class="header-searchwrap" id="searchWrap">
+      <div class="header-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" id="searchInput" placeholder="ابحث: الشركة، الموديل، الرامات، الهارد...">
+      </div>
+    </div>
+  </header>
+
+  <button class="music" id="musicBtn" type="button" aria-label="تشغيل / إيقاف الموسيقى">
+    <svg class="off" viewBox="0 0 24 24" fill="currentColor"><path d="M9 3v11.6A3.5 3.5 0 1 0 11 18V8h6V3H9Z"/></svg>
+    <svg class="on" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="9" width="3.5" height="11" rx="1"/><rect x="10.25" y="4" width="3.5" height="16" rx="1"/><rect x="16.5" y="12" width="3.5" height="8" rx="1"/></svg>
+  </button>
+  <audio id="bgSong" src="song.mp3" loop preload="none"></audio>
+
+  <div class="grid" id="productsGrid">
+    <div class="empty-state">بيتحمل...</div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+<script>
+(function(){
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbzr2mCsxBZST8teHnrm0MegmIg36nE8SGSebzccofnFOxKJ1Cprn7QsAdjfM_uSTerjvA/exec';
+  const WHATSAPP_NUMBER = '201026034728';
+
+  const productsGrid = document.getElementById('productsGrid');
+  const searchInput = document.getElementById('searchInput');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+
+  let allProducts = [];
+
+  function esc(str){
+    if(str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function renderCard(p,i){
+    const subImgsHtml = (p.subImages && p.subImages.length)
+      ? `<div class="sub-imgs">${p.subImages.map(u => `<img src="${esc(u)}" loading="lazy" onclick="window.__openLightbox('${esc(u)}')">`).join('')}</div>`
+      : '';
+    const mainImgHtml = p.mainImage
+      ? `<img class="main-img" src="${esc(p.mainImage)}" loading="lazy" onclick="window.__openLightbox('${esc(p.mainImage)}')" alt="${esc(p.brand)} ${esc(p.model)}">`
+      : `<div class="no-img">لا توجد صورة</div>`;
+
+    const title = `${esc(p.brand)} ${esc(p.model)}`.trim();
+    const waMsg = encodeURIComponent(`مرحباً، عايز أستفسر عن الجهاز: ${(p.brand||'') + ' ' + (p.model||'')}`.trim());
+    const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`;
+
+    const specRows = [
+      ['الهارد', p.storage],
+      ['الرامات', p.ram],
+      ['الشاشة', p.screenSize ? (p.screenSize + (p.touch === 'نعم' ? ' (تاتش)' : '')) : ''],
+      ['GPU', p.gpu]
+    ].filter(([,v]) => v).map(([k,v]) => `
+      <div class="spec-row"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>
+    `).join('');
+
+    return `
+      <div class="card" style="animation-delay:${Math.min(i||0,8)*90}ms">
+        ${mainImgHtml}
+        <div class="card-body">
+          <div class="card-title">${title || 'جهاز'}</div>
+          <div class="details"><div class="dinner">
+            <div class="specs">${specRows}</div>
+            ${p.notes ? `<div class="notes">${esc(p.notes)}</div>` : ''}
+            ${subImgsHtml}
+          </div></div>
+          <div class="btns">
+            <button type="button" class="btn-d" onclick="window.__toggleDetails(this)">تفاصيل</button>
+            <a class="contact-btn" href="${waLink}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2Zm4.5 12c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.1.2-.3.2-.6.1-.9-.4-1.7-.9-2.4-1.6-.6-.6-1-1.3-1.3-1.7-.1-.2 0-.4.1-.5l.4-.4c.1-.1.1-.3.2-.4 0-.1 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 4 3.5 1.9.8 2.3.6 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3Z"/></svg>
+              تواصل معنا
+            </a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  window.__toggleDetails = function(btn){
+    const card = btn.closest('.card');
+    const open = card.classList.toggle('open');
+    btn.textContent = open ? 'إخفاء' : 'تفاصيل';
+  };
+
+  function renderGrid(list){
+    if(!list.length){
+      productsGrid.innerHTML = '<div class="empty-state">لا يوجد أجهزة متاحة دلوقتي، تابعنا قريب 🙏</div>';
+      return;
+    }
+    productsGrid.innerHTML = list.map(renderCard).join('');
+  }
+
+  window.__openLightbox = function(url){
+    lightboxImg.src = url;
+    lightbox.classList.add('open');
+  };
+  lightbox.addEventListener('click', ()=> lightbox.classList.remove('open'));
+
+  const searchWrap = document.getElementById('searchWrap');
+  const lensBtn = document.getElementById('lensBtn');
+  document.getElementById('lensBtn').addEventListener('click', ()=>{
+    const open = searchWrap.classList.toggle('open'); lensBtn.classList.toggle('active', open);
+    if(open){ searchInput.focus(); }
+    else { searchInput.value = ''; renderGrid(allProducts); }
+  });
+
+  searchInput.addEventListener('input', ()=>{
+    const q = searchInput.value.trim().toLowerCase();
+    const words = q.split(/\s+/).filter(Boolean);
+    const filtered = words.length
+      ? allProducts.filter(p => {
+          const hay = [p.brand, p.model, p.storage, p.ram, p.screenSize, p.gpu, p.notes].join(' ').toLowerCase();
+          return words.every(w => hay.includes(w));
+        })
+      : allProducts;
+    renderGrid(filtered);
+  });
+
+  // ---- الموسيقى: غيّر اسم الملف من src في وسم audio (song.mp3) أو استبدل الملف بنفس الاسم ----
+  const song = document.getElementById('bgSong');
+  const musicBtn = document.getElementById('musicBtn');
+  function setMusicIcon(){ musicBtn.classList.toggle('playing', !song.paused); }
+  musicBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    if(song.paused){ song.play().catch(()=>{}); } else { song.pause(); }
+    setMusicIcon();
+  });
+  document.addEventListener('click', ()=>{
+    if(!musicStarted){ musicStarted = true; song.play().then(setMusicIcon).catch(()=>{}); }
+  }, { once:true });
+  let musicStarted = false;
+
+  async function loadProducts(){
+    try{
+      const res = await fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'getStoreProducts' })
+      });
+      const result = await res.json();
+      if(result.ok){
+        allProducts = (result.items || []).filter(p => p.available);
+        renderGrid(allProducts);
+      } else {
+        productsGrid.innerHTML = '<div class="empty-state">حصل خطأ في تحميل المنتجات، جرب تاني.</div>';
+      }
+    } catch(e){
+      productsGrid.innerHTML = '<div class="empty-state">مفيش نت دلوقتي، جرب تاني.</div>';
+    }
+  }
+
+  loadProducts();
+})();
+</script>
+</body>
+</html>
